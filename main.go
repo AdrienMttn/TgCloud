@@ -7,21 +7,12 @@ import (
 	"os"
 
 	"github.com/go-telegram/bot"
+	"github.com/joho/godotenv"
 )
 
-var AcceptTypeImg = [4]string{"image/jpeg","image/png","image/jpg","image/gif"}
-
-type StatusApi struct {
-	Status int `json:"status"`
-	Message string `json:"message"`
-}
-
-type AcceptFormat struct {
-	Supports [4]string `json:"supports"`
-}
-
-
 func main() {
+
+	_ = godotenv.Load(".env")
 
 	b, err := bot.New(os.Getenv("BOT_TOKEN"))
 	tgCloud := models.TgCloud{Bot:b, ChatId: os.Getenv("CHAT_ID")}

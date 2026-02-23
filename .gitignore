@@ -1,0 +1,40 @@
+# === Fichiers sensibles ===
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# === Binaires et builds ===
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+main
+mon-api
+dist/
+build/
+
+# === Dépendances (si tu vends) ===
+vendor/
+
+# === IDE et éditeurs ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Logs et data temporaire ===
+*.log
+tmp/
+temp/
+uploads/  # si tu stockes temporairement avant upload Telegram
