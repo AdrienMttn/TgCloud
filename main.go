@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/img/{id}", tgCloud.GetPhotoOnTg)
 	
 	fmt.Println("Serveur web démarré sur http://localhost:8080")
-	http.ListenAndServe(":8080",nil)
+	http.ListenAndServe(":8100",nil)
 	fmt.Println("\nArrêt en cours...")
 }
 
