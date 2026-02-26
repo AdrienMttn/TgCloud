@@ -37,9 +37,9 @@ Retourne la liste des formats d'images acceptés pour l'upload.
 }
 ```
 
-### `POST /post`
+### `POST /post-from-file`
 
-Permet d'uploader une nouvelle image. L'image doit être envoyée en tant que `multipart/form-data` avec la clé `file`.
+Permet d’uploader une nouvelle image via un fichier locale. L'image doit être envoyée en tant que `multipart/form-data` avec la clé `file`.
 
 **Exemple avec cURL :**
 
@@ -51,7 +51,7 @@ curl -X POST -F "file=@/chemin/vers/votre/image.jpg" https://tgcloud.alwaysdata.
 
 ```json
 {
-  "status": "success",
+  "status": 200,
   "message": "Image postée avec succès",
   "id": "ID_UNIQUE_TG"
 }
@@ -61,10 +61,40 @@ curl -X POST -F "file=@/chemin/vers/votre/image.jpg" https://tgcloud.alwaysdata.
 
 ```json
 {
-  "status": "error",
+  "status": 400,
   "message": "Erreur lors de l'upload."
 }
 ```
+
+### `POST /post-from-url`
+
+Permet d’uploader une nouvelle image via un fichier locale. L'image doit être envoyée en tant que `application/json` avec la clé `url`.
+
+**Exemple avec cURL :**
+
+```bash
+curl --header "Content-Type: application/json" -X POST --data '{"url":"url_de_votre_image"}' https://tgcloud.alwaysdata.net/post-from-url
+```
+
+**Exemple de réponse succès :**
+
+```json
+{
+  "status": 200,
+  "message": "Image postée avec succès",
+  "id": "ID_UNIQUE_TG"
+}
+```
+
+**Exemple de réponse erreur :**
+
+```json
+{
+  "status": 4000,
+  "message": "Erreur lors de l'upload."
+}
+```
+
 
 ### `GET /img/{id}`
 
