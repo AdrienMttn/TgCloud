@@ -1,63 +1,143 @@
-<div style="display:flex; width:100%; justify-content:center">
-<img style="width:50%;" src="./assets/Logo_With_BG.png">
-</div>
-<br><br>
+<p align="center">
+  <img src="./assets/Logo_With_BG.png" width="280" alt="TgCloud Logo">
+</p>
 
-# 🌩️ API de Stockage d'Images avec Telegram
+<h1 align="center">TgCloud</h1>
+<p align="center">
+  <b>Free Image Hosting CDN using Telegram as Unlimited Storage</b><br>
+  Self-hosted • Zero Cloud Costs • Upload via File or URL • Powered by Go
+</p>
 
-Une API simple développée en Go pour fournir un service de stockage d'images en ligne 🚀, similaire à Postimages.org ou 8upload.com, en utilisant un bot Telegram comme backend de stockage.
+<p align="center">
+  <img src="https://img.shields.io/badge/go-1.22+-blue?style=flat-square&logo=go" alt="Go">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
+  <a href="https://railway.app"><img src="https://img.shields.io/badge/Deploy-Railway-9cf?style=flat-square&logo=railway" alt="Railway"></a>
+  <a href="https://render.com"><img src="https://img.shields.io/badge/Deploy-Render-46e3b7?style=flat-square&logo=render" alt="Render"></a>
+</p>
 
-## ✨ Fonctionnalités
+<p align="center">
+  <a href="#demo">View Demo</a> •
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#api-reference">API</a> •
+  <a href="#deployment">Deploy</a>
+</p>
 
-- 📤 Uploader des images.
-- 🖼️ Récupérer des images via un lien.
-- ✅ Lister les formats d'image supportés.
+---
 
-## ☁️ Utilisation
+## 🚀 Demo
 
-Vous pouvez utiliser l'api à l'adresse suivante :
+**Live Instance:** `https://tgcloud.alwaysdata.net`
 
-```
-
-  https://tgcloud.alwaysdata.net/
-
-```
-
-## 📚 Documentation de l'API
-
-### `GET /supports-formats`
-
-Retourne la liste des formats d'images acceptés pour l'upload.
-
-**Exemple de réponse :**
-
-```json
-{
-  "formats": ["image/jpeg", "image/png", "image/gif"]
-}
-```
-
-### `POST /post-from-file`
-
-Permet d’uploader une nouvelle image via un fichier locale. L'image doit être envoyée en tant que `multipart/form-data` avec la clé `file`.
-
-**Exemple avec cURL :**
+Upload from file:
 
 ```bash
-curl -X POST -F "file=@/chemin/vers/votre/image.jpg" https://tgcloud.alwaysdata.net/post
+curl -X POST -F "file=@photo.jpg" https://tgcloud.alwaysdata.net/post-from-file
 ```
 
-**Exemple de réponse succès :**
+Upload from URL:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/image.png"}' \
+  https://tgcloud.alwaysdata.net/post-from-url
+```
+
+**Result:**
 
 ```json
 {
   "status": 200,
   "message": "Image postée avec succès",
-  "id": "ID_UNIQUE_TG"
+  "id": "AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA"
 }
 ```
 
-**Exemple de réponse erreur :**
+## ✨ Features
+
+- 📤 **Dual Upload**: Upload from local file (`multipart/form-data`) or remote URL (`application/json`)
+- 🖼️ **Instant Hotlinks**: Direct image URLs compatible with Discord, Slack, Markdown, HTML `<img>`
+- 💰 **$0 Forever**: Uses Telegram Bot API as free storage backend (2GB per channel)
+- 🔒 **Privacy First**: Self-hosted, no third-party CDNs track your images
+- 🚀 **One-Click Deploy**: Ready for Railway, Render, or any VPS
+- 📋 **Format Validation**: Auto-rejects unsupported formats (JPEG, PNG, GIF, WebP only)
+
+## 📋 Table of Contents
+
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+- [Deployment](#deployment)
+- [Environment Variables](#environment-variables)
+- [Limitations](#limitations)
+
+## ⚡ Quick Start
+
+### Prerequisites
+
+- Go 1.22+
+- Telegram Bot Token ([@BotFather](https://t.me/BotFather))
+- Channel/Group Chat ID (where bot is admin)
+
+### Local Installation
+
+```bash
+git clone https://github.com/AdrienMttn/TgCloud.git
+cd TgCloud
+
+# Edit .env with your BOT_TOKEN and CHAT_ID and port
+
+go mod tidy
+go run main.go
+```
+
+Server starts on `http://localhost:8100` (or your `PORT` env var).
+
+**Find your Chat ID:**
+
+1. Message your bot or add it to a channel
+2. Visit: `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates`
+3. Look for `"chat":{"id":-1001234567890}` (use the number, including the minus if present)
+
+## 📚 API Reference
+
+### `GET /supports-formats`
+
+Returns accepted MIME types.
+
+**Response:**
+
+```json
+{
+  "formats": ["image/jpeg", "image/png", "image/gif", "image/webp"]
+}
+```
+
+### `POST /post-from-file`
+
+Upload image from local file.
+
+- **Content-Type:** `multipart/form-data`
+- **Field name:** `file`
+
+**cURL Example:**
+
+```bash
+curl -X POST \
+  -F "file=@/path/to/image.jpg" \
+  https://tgcloud.alwaysdata.net/post-from-file
+```
+
+**Success (200):**
+
+```json
+{
+  "status": 200,
+  "message": "Image postée avec succès",
+  "id": "AgACAgQAAxkD..."
+}
+```
+
+**Error (400):**
 
 ```json
 {
@@ -68,82 +148,94 @@ curl -X POST -F "file=@/chemin/vers/votre/image.jpg" https://tgcloud.alwaysdata.
 
 ### `POST /post-from-url`
 
-Permet d’uploader une nouvelle image via une url. L'image doit être envoyée en tant que `application/json` avec la clé `url`.
+Upload image from remote URL.
 
-**Exemple avec cURL :**
+- **Content-Type:** `application/json`
+- **Body:** `{"url": "https://example.com/image.jpg"}`
+
+**cURL Example:**
 
 ```bash
-curl --header "Content-Type: application/json" -X POST --data '{"url":"url_de_votre_image"}' https://tgcloud.alwaysdata.net/post-from-url
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/photo.png"}' \
+  https://tgcloud.alwaysdata.net/post-from-url
 ```
 
-**Exemple de réponse succès :**
-
-```json
-{
-  "status": 200,
-  "message": "Image postée avec succès",
-  "id": "ID_UNIQUE_TG"
-}
-```
-
-**Exemple de réponse erreur :**
-
-```json
-{
-  "status": 4000,
-  "message": "Erreur lors de l'upload."
-}
-```
-
+**Response:** Same as `/post-from-file`
 
 ### `GET /img/{id}`
 
-Récupère et affiche une image précédemment uploadée à partir de son identifiant unique.
+Retrieve and display image by Telegram File ID.
 
-**Exemple d'utilisation :**
-Ouvrez `https://tgcloud.alwaysdata.net/img/AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA` dans votre navigateur.
+**Example:**
 
-vous devriez voir l'image correspondante :
+```
+https://tgcloud.alwaysdata.net/img/AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA
+```
 
-<div style="display:flex; width:100%; justify-content:center">
-<img style="width:30%;" src="https://tgcloud.alwaysdata.net/img/AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA">
-</div>
+<p align="center">
+  <img src="https://tgcloud.alwaysdata.net/img/AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA" width="300" alt="Example Image">
+</p>
 
-## 🛠️ Prérequis pour installer et lancer le projet en local
+## 🔧 Environment Variables
 
-- Go (version 1.x)
-- Un bot Telegram et son token.
-- L'ID d'un canal ou d'un chat Telegram où le bot a les droits de publication.
+Create `.env` file:
 
-## 🚀 Installation & Lancement
+```env
+BOT_TOKEN=your_telegram_bot_token_here
+CHAT_ID=-1001234567890
+PORT=8100
+```
 
-1.  **Clonez le dépôt :**
+- `BOT_TOKEN`: Get from [@BotFather](https://t.me/BotFather)
+- `CHAT_ID`: Channel or group ID (must be integer, channels usually start with `-100`)
+- `PORT`: Server port
 
-    ```bash
-    git clone https://github.com/AdrienMttn/TgCloud.git
-    cd TgCloud
-    ```
+## 🚀 Deployment
 
-2.  **Installez les dépendances :**
+### Railway (Recommended)
 
-    ```bash
-    go mod tidy
-    ```
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/button)
 
-3.  **Configuration de l'environnement :**
-    Créez un fichier `.env` à la racine du projet et ajoutez les variables suivantes :
+### Render
 
-    ```env
-    BOT_TOKEN="VOTRE_TOKEN_DE_BOT_TELEGRAM"
-    CHAT_ID="VOTRE_ID_DE_CHAT_OU_CANAL"
-    ```
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
-4.  **Lancez le serveur :**
-    ```bash
-    go run main.go
-    ```
-    Le serveur démarrera sur `http://localhost:8100`.
+## ⚠️ Limitations
 
----
+- **Rate Limiting**: ~30 requests/minute to Telegram API (images are proxied, not direct links)
+- **File Size**: Max 20MB per image (Telegram Bot API limit)
+- **Permanence**: File IDs persist as long as the message exists in your Telegram channel
+- **Bandwidth**: Your server proxies image data (uses your bandwidth, not Telegram's)
 
-fait avec ❤️ par [Adrien Mttn](https://github.com/AdrienMttn) | [GitHub](https://github.com/AdrienMttn) | [LinkedIn](https://www.linkedin.com/in/adrien-metton/)
+## 🤔 Why TgCloud vs Traditional Hosting?
+
+| Feature         | TgCloud        | AWS S3 Free    | Imgur API     |
+| --------------- | -------------- | -------------- | ------------- |
+| **Cost**        | **$0 Forever** | $0 (12mo only) | Rate limited  |
+| **Storage Cap** | Unlimited\*    | 5GB            | Unlimited     |
+| **Hotlinking**  | ✅ Yes         | ✅ Yes         | ❌ Blocked    |
+| **Direct URLs** | ✅ Yes         | ✅ Yes         | Redirect only |
+| **Self-hosted** | ✅ Yes         | ❌ No          | ❌ No         |
+
+\*2GB per channel, create unlimited channels
+
+## 🛣️ Roadmap
+
+- [ ] Local file caching (Redis/filesystem)
+- [ ] Web UI for drag-and-drop upload
+- [ ] Image resizing/thumbnails
+- [ ] API authentication keys
+- [ ] Multiple channel sharding for scale
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=AdrienMttn/TgCloud&type=date&legend=top-left)](https://www.star-history.com/#AdrienMttn/TgCloud&type=date&legend=top-left)
+
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/AdrienMttn">Adrien Mttn</a>
+  <br>
+  <a href="https://linkedin.com/in/adrien-metton">LinkedIn</a> •
+  <a href="https://github.com/AdrienMttn">GitHub</a>
+</p>
