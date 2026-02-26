@@ -23,11 +23,12 @@ func main() {
 	}
 
 	http.HandleFunc("/supports-formats", format.GetAcceptFormat)
-	http.HandleFunc("/post", tgCloud.PostImage)
+	http.HandleFunc("/post-from-file", tgCloud.PostImageFromFile)
+	http.HandleFunc("/post-from-url", tgCloud.PostImageFromUrl)
 	http.HandleFunc("/img/{id}", tgCloud.GetPhotoOnTg)
 	
-	fmt.Println("Serveur web démarré sur http://localhost:8080")
-	http.ListenAndServe(":8100",nil)
+	fmt.Println("Serveur web démarré sur http://localhost:" + os.Getenv("PORT"))
+	http.ListenAndServe(":" + os.Getenv("PORT"),nil)
 	fmt.Println("\nArrêt en cours...")
 }
 

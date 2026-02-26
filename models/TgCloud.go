@@ -13,7 +13,6 @@ import (
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
-
 )
 
 
@@ -22,7 +21,11 @@ type TgCloud struct {
 	ChatId string
 }
 
-func (tgCloud *TgCloud) PostImage(w http.ResponseWriter, r *http.Request) {
+type jsonData struct {
+	Url string `json:"url" binding:"required"`
+}
+
+func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)
@@ -56,18 +59,48 @@ func (tgCloud *TgCloud) PostImage(w http.ResponseWriter, r *http.Request) {
 	// response := tgCloud.Post(fileHeader, header.Filename)
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
-	response := tgCloud.PostOnTg(fileHeader, header.Filename, ctx)
+	response := tgCloud.PostOnTgWithFile(fileHeader, header.Filename, ctx)
 	if response.Status != 200 {
 		w.WriteHeader(response.Status)
 	}
 	json.NewEncoder(w).Encode(response)
 }
 
+func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method != http.MethodPost {
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Méthode non autorisée"})
+		return
+	}
+	jsonBody ,_ := io.ReadAll(r.Body)
+	var data jsonData
+	err := json.Unmarshal(jsonBody, &data)
+	if err != nil{
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Corps de la requête invalide"})
+		return
+	}
+	json.NewEncoder(w).Encode(tgCloud.PostOnTgWithUrl(data.Url, r.Context()))
+}
 
-func (tgCloud *TgCloud) PostOnTg(img []byte, fileName string, ctx context.Context) Response {
+
+func (tgCloud *TgCloud) PostOnTgWithFile(img []byte, fileName string, ctx context.Context) Response {
 	msg, err := tgCloud.Bot.SendPhoto(ctx,&bot.SendPhotoParams{
 			ChatID: tgCloud.ChatId,
 			Photo: &models.InputFileUpload{Filename: fileName, Data: bytes.NewReader(img)},
+	})
+	if err != nil {
+		fmt.Print(err)
+		return Response{Status: 400, Message: err.Error()}
+	}
+	return Response{Status: 200, Message: "Conserver cette Id", Id: msg.Photo[len(msg.Photo)-1].FileID}
+}
+
+func (tgCloud *TgCloud) PostOnTgWithUrl(url string, ctx context.Context) Response {
+	msg, err := tgCloud.Bot.SendPhoto(ctx,&bot.SendPhotoParams{
+			ChatID: tgCloud.ChatId,
+			Photo: &models.InputFileString{Data: url},
 	})
 	if err != nil {
 		fmt.Print(err)
