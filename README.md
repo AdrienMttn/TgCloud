@@ -68,7 +68,7 @@ curl -X POST -F "file=@/chemin/vers/votre/image.jpg" https://tgcloud.alwaysdata.
 
 ### `POST /post-from-url`
 
-Permet d’uploader une nouvelle image via un fichier locale. L'image doit être envoyée en tant que `application/json` avec la clé `url`.
+Permet d’uploader une nouvelle image via une url. L'image doit être envoyée en tant que `application/json` avec la clé `url`.
 
 **Exemple avec cURL :**
 
