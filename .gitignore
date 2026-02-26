@@ -38,3 +38,5 @@ desktop.ini
 tmp/
 temp/
 uploads/  # si tu stockes temporairement avant upload Telegram
+
+tgcloud

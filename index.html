@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <!-- Basics -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#0088cc" />
+
+    <!-- SEO Core -->
+    <title>
+      TgCloud - Free Unlimited Image Hosting via Telegram | Zero-Cost CDN
+    </title>
+    <meta
+      name="description"
+      content="Host unlimited images for free using Telegram as storage backend. Self-hosted image CDN with zero bandwidth costs. Upload via API or web interface. Alternative to Imgur, AWS S3, and Cloudinary."
+    />
+    <meta
+      name="keywords"
+      content="free image hosting, telegram cdn, unlimited image storage, self-hosted cdn, zero cost hosting, image hosting api, free file hosting, telegram bot storage, image proxy, hotlink hosting"
+    />
+
+    <!-- Canonical (évite le duplicate content) -->
+    <link rel="canonical" href="https://tgcloud.alwaysdata.net/" />
+
+    <!-- Favicon & Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+    />
+    <!-- Open Graph (Facebook, LinkedIn, Discord) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tgcloud.alwaysdata.net/" />
+    <meta
+      property="og:title"
+      content="TgCloud - Free Image CDN using Telegram Storage"
+    />
+    <meta
+      property="og:description"
+      content="Upload unlimited images for $0. Bypass AWS costs with this self-hosted Telegram-powered CDN. Supports API & drag-and-drop."
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="TgCloud" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://tgcloud.alwaysdata.net/" />
+    <meta
+      name="twitter:title"
+      content="TgCloud - Free Unlimited Image Hosting"
+    />
+    <meta
+      name="twitter:description"
+      content="Host images for free using Telegram as backend storage. The ultimate AWS S3/Imgur alternative for developers."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+    />
+    <meta name="twitter:creator" content="@AdrienMttn" />
+    <!-- Structured Data (JSON-LD) - Ultra important pour le référencement -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "TgCloud",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux, Windows, macOS",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Free image hosting CDN using Telegram Bot API as unlimited storage backend. Self-hosted alternative to AWS S3 and Imgur.",
+        "url": "https://tgcloud.alwaysdata.net/",
+        "image": "https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png",
+        "author": {
+          "@type": "Person",
+          "name": "Adrien Mttn",
+          "url": "https://github.com/AdrienMttn"
+        },
+        "softwareVersion": "1.0.0",
+        "programmingLanguage": "Go",
+        "featureList": "Unlimited storage, Zero cost, API upload, URL upload, Hotlink support, Self-hosted"
+      }
+    </script>
+    <!-- WebSite Schema (pour le nom de domaine) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://tgcloud.alwaysdata.net/",
+        "name": "TgCloud",
+        "description": "Free image hosting service powered by Telegram",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://tgcloud.alwaysdata.net/img/{search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    <!-- Preconnect (performance SEO) -->
+    <link rel="preconnect" href="https://raw.githubusercontent.com" />
+    <link rel="dns-prefetch" href="https://api.telegram.org" />
+    <!-- Alternate languages (si tu traduis plus tard) -->
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://tgcloud.alwaysdata.net/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://tgcloud.alwaysdata.net/"
+    />
+    <title>TgCloud - Free Image CDN via Telegram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            colors: {
+              tg: {
+                blue: "#0088cc",
+                dark: "#0a0a0a",
+                card: "#151515",
+                border: "#2a2a2a",
+              },
+            },
+            animation: {
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              float: "float 6s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-20px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .gradient-text {
+        background: linear-gradient(135deg, #0088cc 0%, #00ff88 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .code-block {
+        background: #0d0d0d;
+        border: 1px solid #2a2a2a;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2a2a2a;
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #0088cc;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-tg-dark text-gray-300 font-sans antialiased selection:bg-tg-blue selection:text-white"
+  >
+    <!-- Navigation -->
+    <nav
+      class="fixed w-full z-50 top-0 border-b border-tg-border bg-tg-dark/80 backdrop-blur-md"
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <img
+              src="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+              alt="TgCloud"
+              class="h-10 w-10 rounded-lg"
+            />
+            <span class="font-bold text-white text-xl tracking-tight"
+              >TgCloud</span
+            >
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#features"
+              class="hover:text-white transition-colors text-sm"
+              >Features</a
+            >
+            <a href="#demo" class="hover:text-white transition-colors text-sm"
+              >Live Demo</a
+            >
+            <a href="#api" class="hover:text-white transition-colors text-sm"
+              >API</a
+            >
+            <a
+              href="https://github.com/AdrienMttn/TgCloud"
+              target="_blank"
+              class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium transition-all border border-white/10"
+            >
+              GitHub →
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-tg-dark to-tg-dark"
+      ></div>
+
+      <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="animate-float mb-8 inline-block">
+          <img
+            src="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+            alt="TgCloud Logo"
+            class="w-32 h-32 mx-auto rounded-2xl shadow-2xl shadow-blue-500/20"
+          />
+        </div>
+
+        <h1
+          class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight"
+        >
+          Host Images for <span class="gradient-text">$0 Forever</span>
+        </h1>
+
+        <p
+          class="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+        >
+          Unlimited image hosting using Telegram as your CDN backend. No AWS
+          bills. No bandwidth limits. Just pure Go magic.
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <a
+            href="https://tgcloud.alwaysdata.net"
+            target="_blank"
+            class="group bg-tg-blue hover:bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg shadow-blue-500/25 flex items-center gap-2"
+          >
+            <span>Try Live Demo</span>
+            <span class="group-hover:translate-x-1 transition-transform"
+              >→</span
+            >
+          </a>
+          <button
+            onclick="scrollToSection('deploy')"
+            class="glass hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all border border-white/20"
+          >
+            Self-Host Now
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div
+          class="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto border-t border-tg-border pt-8"
+        >
+          <div>
+            <div class="text-3xl font-bold text-white">$0</div>
+            <div class="text-sm text-gray-500 mt-1">Cost Forever</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white">∞</div>
+            <div class="text-sm text-gray-500 mt-1">Storage</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-white">20MB</div>
+            <div class="text-sm text-gray-500 mt-1">Max File Size</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-black/20">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-5xl font-bold text-center text-white mb-16">
+          How The Magic Works
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="glass rounded-2xl p-8 hover:border-tg-blue/50 transition-all duration-300 group"
+          >
+            <div
+              class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <span class="text-2xl">📤</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">1. Upload</h3>
+            <p class="text-gray-400 leading-relaxed">
+              POST your image via file or URL. We stream it to your private
+              Telegram channel via Bot API.
+            </p>
+          </div>
+
+          <div
+            class="glass rounded-2xl p-8 hover:border-tg-blue/50 transition-all duration-300 group"
+          >
+            <div
+              class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <span class="text-2xl">🔑</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">2. Store</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Telegram returns a permanent File ID. We keep it in SQLite. Your
+              image is now in Telegram's cloud (2GB per channel).
+            </p>
+          </div>
+
+          <div
+            class="glass rounded-2xl p-8 hover:border-tg-blue/50 transition-all duration-300 group"
+          >
+            <div
+              class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <span class="text-2xl">⚡</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">3. Serve</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Request <code>/img/{id}</code> → We fetch from Telegram's CDN and
+              proxy it to your users. Hotlink-friendly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Playground -->
+    <section id="demo" class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            Try It Live
+          </h2>
+          <p class="text-gray-400">
+            Upload an image and see the magic happen instantly
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-1 border border-tg-border">
+          <div class="bg-tg-card rounded-xl p-6 md:p-8">
+            <!-- Tabs -->
+            <div class="flex gap-4 mb-6 border-b border-tg-border pb-4">
+              <button
+                onclick="switchTab('file')"
+                id="tab-file"
+                class="text-white border-b-2 border-tg-blue pb-4 font-medium transition-colors"
+              >
+                Upload File
+              </button>
+              <button
+                onclick="switchTab('url')"
+                id="tab-url"
+                class="text-gray-500 hover:text-white pb-4 font-medium transition-colors"
+              >
+                From URL
+              </button>
+            </div>
+
+            <!-- File Upload -->
+            <div id="panel-file" class="space-y-4">
+              <div
+                class="border-2 border-dashed border-tg-border rounded-xl p-8 text-center hover:border-tg-blue/50 transition-colors cursor-pointer"
+                onclick="document.getElementById('fileInput').click()"
+              >
+                <input
+                  type="file"
+                  id="fileInput"
+                  class="hidden"
+                  accept="image/*"
+                  onchange="handleFileSelect(this)"
+                />
+                <div class="text-4xl mb-3">📁</div>
+                <p class="text-white font-medium mb-1">
+                  Drop image here or click to browse
+                </p>
+                <p class="text-sm text-gray-500">
+                  Supports JPG, PNG, GIF, WebP (max 20MB)
+                </p>
+              </div>
+              <button
+                onclick="uploadFile()"
+                id="uploadBtn"
+                class="w-full bg-tg-blue hover:bg-blue-600 text-white py-3 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Upload to Telegram Cloud
+              </button>
+            </div>
+
+            <!-- URL Upload (Hidden by default) -->
+            <div id="panel-url" class="space-y-4 hidden">
+              <input
+                type="url"
+                id="urlInput"
+                placeholder="https://example.com/image.jpg"
+                class="w-full bg-black/50 border border-tg-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tg-blue transition-colors"
+              />
+              <button
+                onclick="uploadUrl()"
+                class="w-full bg-tg-blue hover:bg-blue-600 text-white py-3 rounded-lg font-medium transition-all"
+              >
+                Fetch & Store
+              </button>
+            </div>
+
+            <!-- Result -->
+            <div id="result" class="mt-6 hidden">
+              <div
+                class="bg-green-500/10 border border-green-500/30 rounded-lg p-4 mb-4"
+              >
+                <p class="text-green-400 font-medium mb-2">
+                  ✅ Upload Successful!
+                </p>
+                <p class="text-sm text-gray-400 mb-2">
+                  Your image is now stored in Telegram. Use this URL:
+                </p>
+                <div class="flex gap-2">
+                  <input
+                    type="text"
+                    id="resultUrl"
+                    readonly
+                    class="flex-1 bg-black/50 border border-tg-border rounded px-3 py-2 text-sm font-mono text-white"
+                  />
+                  <button
+                    onclick="copyResult()"
+                    class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded text-sm transition-colors"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+              <div
+                id="imagePreview"
+                class="rounded-lg overflow-hidden border border-tg-border"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Examples -->
+    <section id="api" class="py-20 px-4 sm:px-6 lg:px-8 bg-black/20">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+          API Reference
+        </h2>
+
+        <div class="space-y-6">
+          <!-- Endpoint 1 -->
+          <div class="code-block rounded-xl overflow-hidden">
+            <div
+              class="flex items-center justify-between px-6 py-4 border-b border-tg-border bg-white/5"
+            >
+              <div class="flex items-center gap-3">
+                <span
+                  class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold"
+                  >POST</span
+                >
+                <span class="font-mono text-white">/post-from-file</span>
+              </div>
+              <button
+                onclick="copyCode('code1')"
+                class="text-gray-400 hover:text-white transition-colors text-sm"
+              >
+                Copy
+              </button>
+            </div>
+            <div class="p-6 overflow-x-auto">
+              <pre id="code1" class="font-mono text-sm text-gray-300">
+curl -X POST -F "file=@photo.jpg" \
+  https://tgcloud.alwaysdata.net/post-from-file</pre
+              >
+            </div>
+          </div>
+
+          <!-- Endpoint 2 -->
+          <div class="code-block rounded-xl overflow-hidden">
+            <div
+              class="flex items-center justify-between px-6 py-4 border-b border-tg-border bg-white/5"
+            >
+              <div class="flex items-center gap-3">
+                <span
+                  class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold"
+                  >POST</span
+                >
+                <span class="font-mono text-white">/post-from-url</span>
+              </div>
+              <button
+                onclick="copyCode('code2')"
+                class="text-gray-400 hover:text-white transition-colors text-sm"
+              >
+                Copy
+              </button>
+            </div>
+            <div class="p-6 overflow-x-auto">
+              <pre id="code2" class="font-mono text-sm text-gray-300">
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/img.png"}' \
+  https://tgcloud.alwaysdata.net/post-from-url</pre
+              >
+            </div>
+          </div>
+
+          <!-- Response -->
+          <div class="code-block rounded-xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-tg-border bg-white/5">
+              <span class="text-gray-400 text-sm">Response</span>
+            </div>
+            <div class="p-6 overflow-x-auto">
+              <pre class="font-mono text-sm text-gray-300">
+{
+  "status": 200,
+  "id": "AgACAgQAAxkDAAMraZyUGni2...",
+  "url": "https://tgcloud.alwaysdata.net/img/..."
+}</pre
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-white mb-12">
+          Why TgCloud Wins
+        </h2>
+
+        <div class="glass rounded-2xl overflow-hidden">
+          <table class="w-full text-left">
+            <thead class="bg-white/5 border-b border-tg-border">
+              <tr>
+                <th class="px-6 py-4 text-white font-semibold">Feature</th>
+                <th class="px-6 py-4 text-tg-blue font-semibold">TgCloud</th>
+                <th class="px-6 py-4 text-gray-400 font-semibold">
+                  AWS S3 Free
+                </th>
+                <th class="px-6 py-4 text-gray-400 font-semibold">Imgur API</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-tg-border">
+              <tr>
+                <td class="px-6 py-4 text-gray-300">Cost</td>
+                <td class="px-6 py-4 text-green-400 font-bold">$0 Forever</td>
+                <td class="px-6 py-4 text-gray-500">$0 (12mo)</td>
+                <td class="px-6 py-4 text-gray-500">Rate Limited</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-gray-300">Storage Cap</td>
+                <td class="px-6 py-4 text-white">Unlimited*</td>
+                <td class="px-6 py-4 text-gray-500">5GB</td>
+                <td class="px-6 py-4 text-gray-500">Unlimited</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-gray-300">Hotlinking</td>
+                <td class="px-6 py-4 text-green-400">✅ Yes</td>
+                <td class="px-6 py-4 text-gray-500">✅ Yes</td>
+                <td class="px-6 py-4 text-red-400">❌ No</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-gray-300">Privacy</td>
+                <td class="px-6 py-4 text-green-400">Self-hosted</td>
+                <td class="px-6 py-4 text-yellow-500">AWS sees all</td>
+                <td class="px-6 py-4 text-red-400">Public by default</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="px-6 py-3 bg-white/5 text-xs text-gray-500">
+            *2GB per channel, create unlimited channels
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deploy -->
+    <section
+      id="deploy"
+      class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-blue-900/10"
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">
+          Ready to Deploy?
+        </h2>
+        <p class="text-gray-400 mb-10 text-lg">
+          One click to your own unlimited image host
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <a
+            href="https://railway.app"
+            class="inline-flex items-center justify-center gap-2 bg-[#0B0D0E] hover:bg-[#1a1d1f] text-white border border-gray-700 px-6 py-3 rounded-lg transition-all"
+          >
+            <span>Deploy on Railway</span>
+          </a>
+          <a
+            href="https://render.com"
+            class="inline-flex items-center justify-center gap-2 bg-[#46E3B7] hover:bg-[#3bcfa0] text-black font-medium px-6 py-3 rounded-lg transition-all"
+          >
+            <span>Deploy on Render</span>
+          </a>
+        </div>
+
+        <div
+          class="glass rounded-xl p-6 text-left font-mono text-sm text-gray-400 max-w-2xl mx-auto"
+        >
+          <div
+            class="flex items-center justify-between mb-4 text-gray-500 text-xs uppercase tracking-wider"
+          >
+            <span>Quick Install</span>
+            <button onclick="copyCode('quickInstall')" class="hover:text-white">
+              Copy
+            </button>
+          </div>
+          <pre id="quickInstall" class="text-gray-300">
+git clone https://github.com/AdrienMttn/TgCloud.git
+cd TgCloud
+echo "BOT_TOKEN=your_token" > .env
+echo "CHAT_ID=your_chat_id" >> .env
+go mod tidy && go run main.go</pre
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="border-t border-tg-border py-12 px-4 sm:px-6 lg:px-8 bg-black/40"
+    >
+      <div
+        class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            src="https://raw.githubusercontent.com/AdrienMttn/TgCloud/refs/heads/master/assets/Logo_With_BG.png"
+            class="w-8 h-8 rounded"
+            alt="Logo"
+          />
+          <span class="text-white font-semibold">TgCloud</span>
+        </div>
+
+        <div class="flex gap-6 text-sm text-gray-500">
+          <a
+            href="https://github.com/AdrienMttn/TgCloud"
+            class="hover:text-white transition-colors"
+            >GitHub</a
+          >
+          <a
+            href="https://linkedin.com/in/adrien-metton"
+            class="hover:text-white transition-colors"
+            >LinkedIn</a
+          >
+          <a
+            href="https://tgcloud.alwaysdata.net"
+            class="hover:text-white transition-colors"
+            >Live API</a
+          >
+        </div>
+
+        <div class="text-sm text-gray-600">
+          Made with ❤️ by Adrien Mttn • MIT License
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Tab switching
+      function switchTab(tab) {
+        const filePanel = document.getElementById("panel-file");
+        const urlPanel = document.getElementById("panel-url");
+        const fileTab = document.getElementById("tab-file");
+        const urlTab = document.getElementById("tab-url");
+
+        if (tab === "file") {
+          filePanel.classList.remove("hidden");
+          urlPanel.classList.add("hidden");
+          fileTab.classList.add("text-white", "border-b-2", "border-tg-blue");
+          fileTab.classList.remove("text-gray-500");
+          urlTab.classList.remove("text-white", "border-b-2", "border-tg-blue");
+          urlTab.classList.add("text-gray-500");
+        } else {
+          filePanel.classList.add("hidden");
+          urlPanel.classList.remove("hidden");
+          urlTab.classList.add("text-white", "border-b-2", "border-tg-blue");
+          urlTab.classList.remove("text-gray-500");
+          fileTab.classList.remove(
+            "text-white",
+            "border-b-2",
+            "border-tg-blue",
+          );
+          fileTab.classList.add("text-gray-500");
+        }
+      }
+
+      // File handling
+      let selectedFile = null;
+      function handleFileSelect(input) {
+        if (input.files && input.files[0]) {
+          selectedFile = input.files[0];
+          const dropZone = input.parentElement;
+          dropZone.querySelector("p").textContent =
+            `Selected: ${selectedFile.name}`;
+          dropZone.classList.add("border-tg-blue");
+        }
+      }
+
+      // Upload functions (simulated for demo - replace with real API calls)
+      async function uploadFile() {
+        if (!selectedFile) {
+          alert("Please select a file first");
+          return;
+        }
+
+        const btn = document.getElementById("uploadBtn");
+        btn.disabled = true;
+        btn.textContent = "Uploading to Telegram...";
+
+        // Simulate API call - replace with actual fetch to your API
+        const formData = new FormData();
+        formData.append("img", selectedFile);
+        const response = await fetch("/post-from-file", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        showResult(`/img/${data.id}`);
+        btn.disabled = false;
+      }
+
+      async function uploadUrl() {
+        const url = document.getElementById("urlInput").value;
+        if (!url) return;
+
+        const response = await fetch("/post-from-url", {
+          method: "POST",
+          body: JSON.stringify({ url: url }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        showResult(`/img/${data.id}`);
+      }
+
+      function showResult(url) {
+        const result = document.getElementById("result");
+        const input = document.getElementById("resultUrl");
+        const preview = document.getElementById("imagePreview");
+
+        result.classList.remove("hidden");
+        input.value = `${window.location.origin}${url}`;
+
+        // If it was a file upload, show preview
+        if (selectedFile) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.innerHTML = `<img src="${e.target.result}" class="w-full h-64 object-contain bg-black/50" alt="Preview">`;
+          };
+          reader.readAsDataURL(selectedFile);
+        }
+
+        // Smooth scroll to result
+        result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      function copyResult() {
+        const input = document.getElementById("resultUrl");
+        input.select();
+        document.execCommand("copy");
+        alert("URL copied to clipboard!");
+      }
+
+      function copyCode(id) {
+        const el = document.getElementById(id);
+        navigator.clipboard.writeText(el.innerText);
+
+        // Visual feedback
+        const btn = event.target;
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = original), 2000);
+      }
+
+      function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Intersection Observer for animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+          }
+        });
+      });
+
+      // Observe all cards
+      document.querySelectorAll(".glass").forEach((el) => {
+        el.classList.add(
+          "transition-all",
+          "duration-700",
+          "opacity-0",
+          "translate-y-10",
+        );
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

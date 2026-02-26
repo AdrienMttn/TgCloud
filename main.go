@@ -22,6 +22,7 @@ func main() {
 		panic(err)
 	}
 
+	http.HandleFunc("/", mainPage)
 	http.HandleFunc("/supports-formats", format.GetAcceptFormat)
 	http.HandleFunc("/post-from-file", tgCloud.PostImageFromFile)
 	http.HandleFunc("/post-from-url", tgCloud.PostImageFromUrl)
@@ -32,3 +33,6 @@ func main() {
 	fmt.Println("\nArrêt en cours...")
 }
 
+func mainPage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "index.html")
+}

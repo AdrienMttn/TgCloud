@@ -26,6 +26,9 @@ type jsonData struct {
 }
 
 func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)
@@ -67,6 +70,10 @@ func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request
 }
 
 func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)

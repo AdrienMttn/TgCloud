@@ -15,6 +15,10 @@ func NewAcceptFormat() AcceptFormat{
 }
 
 func (support *AcceptFormat) GetAcceptFormat(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodGet {
 		w.WriteHeader(400)
@@ -23,6 +27,8 @@ func (support *AcceptFormat) GetAcceptFormat(w http.ResponseWriter, r *http.Requ
 	}
 	json.NewEncoder(w).Encode(support)
 }
+
+
 
 func (AcceptFormatList *AcceptFormat) TestIsSupport(format string) bool{
 	for _, f := range AcceptFormatList.Supports {
