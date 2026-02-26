@@ -10,7 +10,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/go-1.22+-blue?style=flat-square&logo=go" alt="Go">
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
   <a href="https://railway.app"><img src="https://img.shields.io/badge/Deploy-Railway-9cf?style=flat-square&logo=railway" alt="Railway"></a>
   <a href="https://render.com"><img src="https://img.shields.io/badge/Deploy-Render-46e3b7?style=flat-square&logo=render" alt="Render"></a>
 </p>
