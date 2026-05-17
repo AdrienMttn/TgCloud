@@ -70,6 +70,10 @@ func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request
 func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Method not allowed"})
