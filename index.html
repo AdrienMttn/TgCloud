@@ -491,7 +491,7 @@
             >
               <div class="flex items-center gap-3">
                 <span
-                  class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold"
+                  class="bg-blue-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold"
                   >POST</span
                 >
                 <span class="font-mono text-white">/post-from-file</span>
@@ -549,8 +549,8 @@ curl -X POST \
               <pre class="font-mono text-sm text-gray-300">
 {
   "status": 200,
+  "message": "Image uploaded successfully. Keep this ID safe.",
   "id": "AgACAgQAAxkDAAMraZyUGni2...",
-  "url": "https://tgcloud.alwaysdata.net/img/..."
 }</pre
               >
             </div>
@@ -757,7 +757,7 @@ go mod tidy && go run main.go</pre
         // Simulate API call - replace with actual fetch to your API
         const formData = new FormData();
         formData.append("img", selectedFile);
-        const response = await fetch("/post-from-file", {
+        const response = await fetch("https://tgcloud.alwaysdata.net/post-from-file", {
           method: "POST",
           body: formData,
         });
@@ -770,7 +770,7 @@ go mod tidy && go run main.go</pre
         const url = document.getElementById("urlInput").value;
         if (!url) return;
 
-        const response = await fetch("/post-from-url", {
+        const response = await fetch("https://tgcloud.alwaysdata.net/post-from-url", {
           method: "POST",
           body: JSON.stringify({ url: url }),
           headers: {
@@ -787,7 +787,7 @@ go mod tidy && go run main.go</pre
         const preview = document.getElementById("imagePreview");
 
         result.classList.remove("hidden");
-        input.value = `${window.location.origin}${url}`;
+        input.value = `https://tgcloud.alwaysdata.net${url}`;
 
         // If it was a file upload, show preview
         if (selectedFile) {
