@@ -22,6 +22,9 @@ func main() {
 		panic(err)
 	}
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+	})
 	http.HandleFunc("/supports-formats", format.GetAcceptFormat)
 	http.HandleFunc("/post-from-file", tgCloud.PostImageFromFile)
 	http.HandleFunc("/post-from-url", tgCloud.PostImageFromUrl)
