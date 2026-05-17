@@ -2,8 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	. "mon-api/types"
 	"net/http"
+	. "telegram-cloud/types"
 )
 
 type AcceptFormat struct {

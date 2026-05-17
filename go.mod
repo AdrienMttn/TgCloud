@@ -1,4 +1,4 @@
-module mon-api
+module telegram-cloud
 
 go 1.22.6
 

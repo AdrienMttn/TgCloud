@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	. "mon-api/types"
 	"net/http"
 	"os"
+	. "telegram-cloud/types"
 	"time"
 
 	"github.com/go-telegram/bot"
@@ -26,22 +26,23 @@ type jsonData struct {
 }
 
 func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Méthode non autorisée"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Method not allowed"})
 		return
 	}
 	err := r.ParseForm()
 	if err != nil {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Formulaire invalide"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Error while parsing the form data"})
 		return
 	}
 	img, header, err := r.FormFile("img")
 	if err != nil {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Pas de fichier ou image invalide"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Image file is required"})
 		return
 	}
 	fileHeader, _ := io.ReadAll(img)
@@ -52,7 +53,7 @@ func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request
 	
 	if !AcceptFormat.TestIsSupport(format) {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: fmt.Sprintf("Le format '%s' n'est pas supporté", format)})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: fmt.Sprintf("This format '%s' is not supported", format)})
 		return
 	}
 
@@ -67,10 +68,11 @@ func (tgCloud *TgCloud) PostImageFromFile(w http.ResponseWriter, r *http.Request
 }
 
 func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Méthode non autorisée"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Method not allowed"})
 		return
 	}
 	jsonBody ,_ := io.ReadAll(r.Body)
@@ -78,7 +80,7 @@ func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request)
 	err := json.Unmarshal(jsonBody, &data)
 	if err != nil{
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Corps de la requête invalide"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Invalid JSON body"})
 		return
 	}
 	json.NewEncoder(w).Encode(tgCloud.PostOnTgWithUrl(data.Url, r.Context()))
@@ -86,39 +88,40 @@ func (tgCloud *TgCloud) PostImageFromUrl(w http.ResponseWriter, r *http.Request)
 
 
 func (tgCloud *TgCloud) PostOnTgWithFile(img []byte, fileName string, ctx context.Context) Response {
-	msg, err := tgCloud.Bot.SendPhoto(ctx,&bot.SendPhotoParams{
+	msg, err := tgCloud.Bot.SendDocument(ctx,&bot.SendDocumentParams{
 			ChatID: tgCloud.ChatId,
-			Photo: &models.InputFileUpload{Filename: fileName, Data: bytes.NewReader(img)},
+			Document: &models.InputFileUpload{Filename: fileName, Data: bytes.NewReader(img)},
 	})
 	if err != nil {
 		fmt.Print(err)
 		return Response{Status: 400, Message: err.Error()}
 	}
-	return Response{Status: 200, Message: "Conserver cette Id", Id: msg.Photo[len(msg.Photo)-1].FileID}
+	return Response{Status: 200, Message: "Image uploaded successfully. Keep this ID safe.", Id:msg.Document.FileID}
 }
 
 func (tgCloud *TgCloud) PostOnTgWithUrl(url string, ctx context.Context) Response {
-	msg, err := tgCloud.Bot.SendPhoto(ctx,&bot.SendPhotoParams{
+	msg, err := tgCloud.Bot.SendDocument(ctx,&bot.SendDocumentParams{
 			ChatID: tgCloud.ChatId,
-			Photo: &models.InputFileString{Data: url},
+			Document: &models.InputFileString{Data: url},
 	})
 	if err != nil {
 		fmt.Print(err)
 		return Response{Status: 400, Message: err.Error()}
 	}
-	return Response{Status: 200, Message: "Conserver cette Id", Id: msg.Photo[len(msg.Photo)-1].FileID}
+	return Response{Status: 200, Message: "Image uploaded successfully. Keep this ID safe.", Id: msg.Document.FileID}
 }
 
 
 func (tgCloud *TgCloud) GetPhotoOnTg(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method != "GET"{
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400, Message:"Méthode non autorisée"})
+		json.NewEncoder(w).Encode(Response{Status: 400, Message:"Method not allowed"})
 	}
 	id := r.PathValue("id")
 	if id == "" {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(Response{Status: 400, Message:"Entrer un id"})
+		json.NewEncoder(w).Encode(Response{Status: 400, Message:"Empty id"})
 		return
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
@@ -133,13 +136,13 @@ func (tgCloud *TgCloud) GetPhotoOnTg(w http.ResponseWriter, r *http.Request){
 	client := &http.Client{Timeout: 15 * time.Second}
 	resp, err := client.Get(url)
 	if err != nil {
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Erreur lors de la récupération de l'image"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Error while fetching the image from Telegram"})
 		return
 	}
 	defer resp.Body.Close()
 	data , err := io.ReadAll(resp.Body)
 	if err != nil {
-		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Erreur lors de la lecture de l'image"})
+		json.NewEncoder(w).Encode(Response{Status: 400,Message: "Error while reading the image data"})
 		return
 	}
 	w.Header().Set("Content-Type", http.DetectContentType(data))

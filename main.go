@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"mon-api/models"
 	"net/http"
 	"os"
+	"telegram-cloud/models"
 
 	"github.com/go-telegram/bot"
 	"github.com/joho/godotenv"
