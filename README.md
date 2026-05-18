@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="#demo">View Demo</a> •
+  <a href="https://adrienmttn.github.io/TgCloud">View Demo</a> •
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#api-reference">API</a> •
@@ -47,7 +47,7 @@ curl -X POST -H "Content-Type: application/json" \
 ```json
 {
   "status": 200,
-  "message": "Image postée avec succès",
+  "message": "Image uploaded successfully. Keep this ID safe.",
   "id": "AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA"
 }
 ```
@@ -131,7 +131,7 @@ curl -X POST \
 ```json
 {
   "status": 200,
-  "message": "Image postée avec succès",
+  "message": "Image uploaded successfully. Keep this ID safe.",
   "id": "AgACAgQAAxkD..."
 }
 ```
@@ -141,7 +141,7 @@ curl -X POST \
 ```json
 {
   "status": 400,
-  "message": "Erreur lors de l'upload."
+  "message": "Error while uploading the image on Telegram"
 }
 ```
 
@@ -223,7 +223,7 @@ PORT=8100
 ## 🛣️ Roadmap
 
 - [ ] Local file caching (Redis/filesystem)
-- [ ] Web UI for drag-and-drop upload
+- [X] Web UI for drag-and-drop upload
 - [ ] Image resizing/thumbnails
 - [ ] API authentication keys
 - [ ] Multiple channel sharding for scale
@@ -233,7 +233,7 @@ PORT=8100
 [![Star History Chart](https://api.star-history.com/svg?repos=AdrienMttn/TgCloud&type=date&legend=top-left)](https://www.star-history.com/#AdrienMttn/TgCloud&type=date&legend=top-left)
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/AdrienMttn">Adrien Mttn</a>
+  Made with ❤️ by <a href="https://adrienmttn.github.io">Adrien Mttn</a>
   <br>
   <a href="https://linkedin.com/in/adrien-metton">LinkedIn</a> •
   <a href="https://github.com/AdrienMttn">GitHub</a>
