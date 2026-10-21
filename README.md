@@ -31,7 +31,7 @@
 Upload from file:
 
 ```bash
-curl -X POST -F "file=@photo.jpg" https://tgcloud.alwaysdata.net/post-from-file
+curl -X POST -F "file=@photo.jpg" https://tgcloud.alwaysdata.net/img
 ```
 
 Upload from URL:
@@ -39,15 +39,13 @@ Upload from URL:
 ```bash
 curl -X POST -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/image.png"}' \
-  https://tgcloud.alwaysdata.net/post-from-url
+  https://tgcloud.alwaysdata.net/img
 ```
 
 **Result:**
 
 ```json
 {
-  "status": 200,
-  "message": "Image uploaded successfully. Keep this ID safe.",
   "id": "AgACAgQAAxkDAAMraZyUGni2TrQXYkhK5ursyqon8wIAAsMOaxvNseFQ30BlvGjM3CIBAAMCAAN3AAM6BA"
 }
 ```
@@ -99,7 +97,7 @@ Server starts on `http://localhost:8100` (or your `PORT` env var).
 
 ## 📚 API Reference
 
-### `GET /supports-formats`
+### `GET /format`
 
 Returns accepted MIME types.
 
@@ -107,11 +105,11 @@ Returns accepted MIME types.
 
 ```json
 {
-  "formats": ["image/jpeg", "image/png", "image/gif", "image/webp"]
+  "supports": ["image/jpeg", "image/png", "image/gif", "image/webp"]
 }
 ```
 
-### `POST /post-from-file`
+### `POST /img`
 
 Upload image from local file.
 
@@ -123,15 +121,13 @@ Upload image from local file.
 ```bash
 curl -X POST \
   -F "file=@/path/to/image.jpg" \
-  https://tgcloud.alwaysdata.net/post-from-file
+  https://tgcloud.alwaysdata.net/img
 ```
 
 **Success (200):**
 
 ```json
 {
-  "status": 200,
-  "message": "Image uploaded successfully. Keep this ID safe.",
   "id": "AgACAgQAAxkD..."
 }
 ```
@@ -140,12 +136,11 @@ curl -X POST \
 
 ```json
 {
-  "status": 400,
-  "message": "Error while uploading the image on Telegram"
+  "error": "Error while uploading the image on Telegram"
 }
 ```
 
-### `POST /post-from-url`
+### `POST /img`
 
 Upload image from remote URL.
 
@@ -158,10 +153,10 @@ Upload image from remote URL.
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/photo.png"}' \
-  https://tgcloud.alwaysdata.net/post-from-url
+  https://tgcloud.alwaysdata.net/img
 ```
 
-**Response:** Same as `/post-from-file`
+**Response:** Same as `/img`
 
 ### `GET /img/{id}`
 
