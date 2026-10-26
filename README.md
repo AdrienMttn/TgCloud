@@ -10,6 +10,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/go-1.22+-blue?style=flat-square&logo=go" alt="Go">
+  <img src="https://img.shields.io/github/v/release/AdrienMttn/TgCloud?style=flat-square&logo=github" alt="Release">
+  <img src="https://img.shields.io/github/license/AdrienMttn/TgCloud?style=flat-square" alt="LICENSE">
+  <img src="https://img.shields.io/github/downloads/AdrienMttn/TgCloud/total?style=flat-square" alt="downloads">
+  <img src="https://img.shields.io/github/stars/AdrienMttn/TgCloud?style=flat-square" alt="stars">
 </p>
 
 <p align="center">
