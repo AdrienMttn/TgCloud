@@ -494,7 +494,7 @@
                   class="bg-blue-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold"
                   >POST</span
                 >
-                <span class="font-mono text-white">/post-from-file</span>
+                <span class="font-mono text-white">/img</span>
               </div>
               <button
                 onclick="copyCode('code1')"
@@ -506,7 +506,7 @@
             <div class="p-6 overflow-x-auto">
               <pre id="code1" class="font-mono text-sm text-gray-300">
 curl -X POST -F "file=@photo.jpg" \
-  https://tgcloud.alwaysdata.net/post-from-file</pre
+  https://tgcloud.alwaysdata.net/img</pre
               >
             </div>
           </div>
@@ -521,7 +521,7 @@ curl -X POST -F "file=@photo.jpg" \
                   class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold"
                   >POST</span
                 >
-                <span class="font-mono text-white">/post-from-url</span>
+                <span class="font-mono text-white">/img</span>
               </div>
               <button
                 onclick="copyCode('code2')"
@@ -535,7 +535,7 @@ curl -X POST -F "file=@photo.jpg" \
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/img.png"}' \
-  https://tgcloud.alwaysdata.net/post-from-url</pre
+  https://tgcloud.alwaysdata.net/img</pre
               >
             </div>
           </div>
@@ -548,9 +548,7 @@ curl -X POST \
             <div class="p-6 overflow-x-auto">
               <pre class="font-mono text-sm text-gray-300">
 {
-  "status": 200,
-  "message": "Image uploaded successfully. Keep this ID safe.",
-  "id": "AgACAgQAAxkDAAMraZyUGni2...",
+  "id": "AgACAgQAAxkDAAMraZyUGni2..."
 }</pre
               >
             </div>
