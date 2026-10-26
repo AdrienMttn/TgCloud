@@ -10,8 +10,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/go-1.22+-blue?style=flat-square&logo=go" alt="Go">
-  <a href="https://railway.app"><img src="https://img.shields.io/badge/Deploy-Railway-9cf?style=flat-square&logo=railway" alt="Railway"></a>
-  <a href="https://render.com"><img src="https://img.shields.io/badge/Deploy-Render-46e3b7?style=flat-square&logo=render" alt="Render"></a>
 </p>
 
 <p align="center">
@@ -19,7 +17,6 @@
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#api-reference">API</a> •
-  <a href="#deployment">Deploy</a>
 </p>
 
 ---
@@ -188,13 +185,60 @@ PORT=8100
 
 ## 🚀 Deployment
 
-### Railway (Recommended)
+TgCloud is distributed as a pre-built binary, so you don't need Go installed to run it.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/button)
+### 1. Download the latest release
 
-### Render
+Open the [latest release](https://github.com/AdrienMttn/TgCloud/releases/latest) and download the archive that matches your operating system and CPU architecture:
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+| OS      | Architecture            | File                          |
+| ------- | ----------------------- | ----------------------------- |
+| Linux   | x86_64 (Intel/AMD)      | `tgcloud_Linux_x86_64.tar.gz` |
+| Linux   | arm64 (e.g. Raspberry Pi 4/5) | `tgcloud_Linux_arm64.tar.gz`  |
+| macOS   | Intel                   | `tgcloud_Darwin_x86_64.tar.gz` |
+| macOS   | Apple Silicon (M1/M2/…) | `tgcloud_Darwin_arm64.tar.gz` |
+| Windows | x86_64                  | `tgcloud_Windows_x86_64.zip`  |
+
+> Not sure which one to pick? On Linux/macOS, run `uname -m`: `x86_64` means x86_64, `aarch64` or `arm64` means arm64.
+
+On Linux or macOS you can also download and extract it in one command (example for Linux x86_64):
+
+```bash
+curl -L https://github.com/AdrienMttn/TgCloud/releases/latest/download/tgcloud_Linux_x86_64.tar.gz | tar -xz
+```
+
+On Windows, right-click the `.zip` archive and choose **Extract All...**
+
+### 2. Configure the environment variables
+
+TgCloud is configured through environment variables. Create a `.env` file next to the binary:
+
+```env
+BOT_TOKEN=your_telegram_bot_token_here
+CHAT_ID=-1001234567890
+PORT=8100
+```
+
+| Variable    | Description                                                                 |
+| ----------- | --------------------------------------------------------------------------- |
+| `BOT_TOKEN` | Your Telegram bot token, obtained from [@BotFather](https://t.me/BotFather) |
+| `CHAT_ID`   | ID of the channel or group where images are stored (the bot must be an admin). Channel IDs usually start with `-100` |
+| `PORT`      | Port the server listens on (e.g. `8100`)                                    |
+
+On a VPS or hosting platform, you can set these variables in the platform's settings or in your service configuration instead of using a `.env` file.
+
+### 3. Run it
+
+```bash
+# Linux / macOS
+chmod +x ./tgcloud
+./tgcloud
+
+# Windows
+.\tgcloud.exe
+```
+
+The server is now available at `http://localhost:8100` (or the port you configured).
 
 ## ⚠️ Limitations
 
