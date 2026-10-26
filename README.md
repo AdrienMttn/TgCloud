@@ -4,7 +4,7 @@
 
 <h1 align="center">TgCloud</h1>
 <p align="center">
-  <b>Free Image Hosting CDN using Telegram as Unlimited Storage</b><br>
+  <b>Open-source image hosting powered by Telegram storage. Self-hosted, no database required.</b><br>
   Self-hosted • Zero Cloud Costs • Upload via File or URL • Powered by Go
 </p>
 
@@ -217,10 +217,8 @@ PORT=8100
 
 ## 🛣️ Roadmap
 
-- [ ] Local file caching (Redis/filesystem)
 - [X] Web UI for drag-and-drop upload
 - [ ] Image resizing/thumbnails
-- [ ] API authentication keys
 - [ ] Multiple channel sharding for scale
 
 ## ⭐ Star History
