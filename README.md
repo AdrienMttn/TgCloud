@@ -32,7 +32,7 @@
 Upload from file:
 
 ```bash
-curl -X POST -F "file=@photo.jpg" https://tgcloud.alwaysdata.net/img/
+curl -X POST -F "img=@photo.jpg" https://tgcloud.alwaysdata.net/img/
 ```
 
 Upload from URL:
