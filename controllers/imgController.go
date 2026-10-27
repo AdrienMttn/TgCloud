@@ -26,10 +26,6 @@ func NewImgController(s ImgService) *ImgController {
 }
 
 func (c *ImgController) Post(w http.ResponseWriter, r *http.Request){
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-  w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
 	img, header, err := r.FormFile("img")
@@ -66,7 +62,6 @@ func (c *ImgController) Post(w http.ResponseWriter, r *http.Request){
 }
 
 func (c *ImgController) Get(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
 	id := r.PathValue("id")

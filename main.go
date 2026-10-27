@@ -22,20 +22,26 @@ func main() {
 	CONTROLLERS := routes.Controllers{
 		Img: controllers.NewImgController(&services.ImgService{Bot:b, ChatId: CONFIG.Telegram.ChatId}),
 		AcceptFormat: controllers.NewAcceptFormatController(&services.AcceptFormatService{}),
+		Stat: controllers.NewStatController(services.NewStatService(version)),
 	}
-
-	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	// 	w.Header().Set("Content-Type", "application/json")
-	// 	json.NewEncoder(w).Encode(map[string]string{"message": "Welcome to TgCloud API", "version": version})
-	// })
-	// http.HandleFunc("/supports-formats", format.GetAcceptFormat)
-	// http.HandleFunc("/post-from-file", tgCloud.PostImageFromFile)
-	// http.HandleFunc("/post-from-url", tgCloud.PostImageFromUrl)
-	// http.HandleFunc("/img/{id}", tgCloud.GetPhotoOnTg)
 	
 	fmt.Println("Serveur web démarré sur http://localhost:" + CONFIG.Api.Port)
-	http.ListenAndServe(":" + CONFIG.Api.Port, routes.SetupRouter(CONTROLLERS, version))
+	http.ListenAndServe(":" + CONFIG.Api.Port, cors(routes.SetupRouter(CONTROLLERS)))
 	fmt.Println("\nArrêt en cours...")
 }
 
+func cors(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := w.Header()
+		h.Set("Access-Control-Allow-Origin", "*")
+		h.Set("Access-Control-Allow-Methods", "*")
+		h.Set("Access-Control-Allow-Headers", "*")
+		h.Set("Access-Control-Expose-Headers", "*")
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}

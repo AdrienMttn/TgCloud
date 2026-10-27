@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"encoding/json"
 	"net/http"
 	"telegram-cloud/controllers"
 )
@@ -11,16 +10,13 @@ import (
 type Controllers struct {
 	Img *controllers.ImgController
 	AcceptFormat *controllers.AcceptFormatController
+	Stat *controllers.StatController
 }
 
-func SetupRouter(c Controllers, v string) http.Handler {
+func SetupRouter(c Controllers) http.Handler {
 	router := http.NewServeMux()
 
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"message": "Welcome to TgCloud API", "version": v})
-	})
+	registerStat(router, *c.Stat)
 	registerImg(router, *c.Img)
 	registerAcceptFormat(router, *c.AcceptFormat)
 

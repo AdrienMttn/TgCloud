@@ -20,11 +20,8 @@ type TelegramConfig struct {
 }
 
 func LoadConfig() *Config {
-	err := godotenv.Load(".env")
-	if err != nil {
-		return &Config{}
-	}
-
+	_ = godotenv.Load(".env")
+	
 	config := &Config{
 		Telegram: TelegramConfig{
 			BotToken: os.Getenv("BOT_TOKEN"),
