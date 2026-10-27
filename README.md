@@ -20,7 +20,7 @@
   <a href="https://adrienmttn.github.io/TgCloud">View Demo</a> •
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
-  <a href="#api-reference">API</a> •
+  <a href="#api-reference">API</a>
 </p>
 
 ---
@@ -55,9 +55,9 @@ curl -X POST -H "Content-Type: application/json" \
 
 - 📤 **Dual Upload**: Upload from local file (`multipart/form-data`) or remote URL (`application/json`)
 - 🖼️ **Instant Hotlinks**: Direct image URLs compatible with Discord, Slack, Markdown, HTML `<img>`
-- 💰 **$0 Forever**: Uses Telegram Bot API as free storage backend (2GB per channel)
+- 💰 **Low-cost**: Uses Telegram Bot API as free storage backend (2GB per channel)
 - 🔒 **Privacy First**: Self-hosted, no third-party CDNs track your images
-- 🚀 **One-Click Deploy**: Ready for Railway, Render, or any VPS
+- 🚀 **Fast Deploy**: On any VPS
 - 📋 **Format Validation**: Auto-rejects unsupported formats (JPEG, PNG, GIF, WebP only)
 
 ## 📋 Table of Contents
