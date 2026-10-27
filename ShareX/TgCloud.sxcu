@@ -1,0 +1,10 @@
+{
+  "Version": "22.0.0",
+  "Name": "TgCloud",
+  "DestinationType": "ImageUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "https://tgcloud.alwaysdata.net/img/",
+  "Body": "MultipartFormData",
+  "FileFormName": "img",
+  "URL": "https://tgcloud.alwaysdata.net/img/{json:id}"
+}

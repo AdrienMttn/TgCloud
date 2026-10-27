@@ -269,6 +269,27 @@ The server is now available at `http://localhost:8100` (or the port you configur
 - [ ] Image resizing/thumbnails
 - [ ] Multiple channel sharding for scale
 
+## ShareX Integration
+ 
+TgCloud can be used as a custom image uploader in ShareX, allowing you to upload screenshots and images directly to your TgCloud instance.
+ 
+### Import Configuration
+
+1. Download the provided [`ShareX/TgCloud.sxcu`](ShareX/TgCloud.sxcu) configuration file.
+2. Open ShareX.
+3. Go to **Destinations → Custom uploader settings**.
+4. Click **Import** and select the configuration file.
+5. Set the imported uploader as your default image uploader.
+
+### How It Works
+
+When an image is uploaded:
+
+1. ShareX sends the file to your TgCloud instance.
+2. TgCloud stores the image using Telegram storage.
+3. TgCloud returns a unique image identifier.
+4. ShareX automatically generates and copies the final image URL to your clipboard.
+
 ## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=AdrienMttn/TgCloud&type=date&legend=top-left)](https://www.star-history.com/#AdrienMttn/TgCloud&type=date&legend=top-left)
