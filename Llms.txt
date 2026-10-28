@@ -1,0 +1,55 @@
+# TgCloud
+
+> TgCloud is an open-source, self-hosted image hosting service and CDN written in Go that uses Telegram (via the Bot API) as its storage backend. Images are uploaded from a file, a remote URL, a web UI or ShareX, and served through direct hotlinkable URLs. No database is required: the Telegram file ID returned at upload time is the only thing needed to retrieve an image.
+
+TgCloud is aimed at developers who want low-cost image hosting without S3, Imgur or a paid CDN. It ships as a pre-built binary (no Go installation needed to run it) for Linux, macOS and Windows, and only needs a Telegram bot token and a channel or group chat ID. It can be built from source with Go 1.22+.
+
+Key facts:
+- Language: Go (1.22+ to build from source)
+- Distribution: pre-built binaries on GitHub Releases (Linux x86_64/arm64, macOS Intel/Apple Silicon, Windows x86_64)
+- Storage: Telegram channel or group (about 2 GB per channel; several channels can be used)
+- Database: none
+- Supported formats: JPEG, PNG, GIF, WebP
+- Max file size: 20 MB per image (Telegram Bot API limit)
+- Upload methods: multipart file upload, JSON with a remote URL, web UI (drag and drop), ShareX custom uploader
+- Output: direct image URLs usable in Discord, Slack, Markdown and HTML `<img>` tags
+- Main endpoints: `GET /format`, `POST /img` (file or URL upload), `GET /img/{id}`
+- Configuration: environment variables `BOT_TOKEN`, `CHAT_ID`, `PORT` (or a `.env` file)
+- Known limits: roughly 30 requests per minute to the Telegram API; images are proxied through your server, so they use your bandwidth
+- Live demo instance: https://tgcloud.alwaysdata.net
+- Author: Adrien Mttn
+
+## Documentation
+
+- [README](https://github.com/AdrienMttn/TgCloud/blob/master/README.md): Overview, features, quick start, API reference, deployment, environment variables, limitations, ShareX integration, roadmap and comparison with AWS S3 and Imgur
+- [Project website](https://adrienmttn.github.io/TgCloud/): Demo and presentation page of the project
+
+## API
+
+- [API reference](https://github.com/AdrienMttn/TgCloud#-api-reference): `GET /format` lists accepted MIME types, `POST /img` uploads an image (multipart file or JSON `{"url": "..."}`) and returns its ID, `GET /img/{id}` returns the image for a Telegram file ID
+- [Live instance](https://tgcloud.alwaysdata.net): Public demo server to try uploads and image retrieval
+
+## Getting started
+
+- [Quick start](https://github.com/AdrienMttn/TgCloud#-quick-start): Prerequisites (Telegram bot token from @BotFather, chat ID, Go 1.22+ for source builds), local installation and how to find the chat ID
+- [Deployment](https://github.com/AdrienMttn/TgCloud#-deployment): Download the pre-built binary for your OS, configure environment variables, run it on a VPS or locally
+- [Latest release](https://github.com/AdrienMttn/TgCloud/releases/latest): Binaries for Linux, macOS and Windows
+- [Environment variables](https://github.com/AdrienMttn/TgCloud#-environment-variables): `BOT_TOKEN`, `CHAT_ID` and `PORT`
+
+## Integrations
+
+- [ShareX custom uploader](https://github.com/AdrienMttn/TgCloud/blob/master/ShareX/TgCloud.sxcu): Import file to upload screenshots and images from ShareX directly to a TgCloud instance (setup steps are in the README)
+
+## Source code
+
+- [Repository](https://github.com/AdrienMttn/TgCloud): Main GitHub repository
+- [main.go](https://github.com/AdrienMttn/TgCloud/blob/master/main.go): Application entry point and HTTP routes
+- [models](https://github.com/AdrienMttn/TgCloud/tree/master/models): Business logic and Telegram interaction
+- [types](https://github.com/AdrienMttn/TgCloud/tree/master/types): Shared Go types and response structures
+- [.goreleaser.yml](https://github.com/AdrienMttn/TgCloud/blob/master/.goreleaser.yml): Release build configuration
+- [GitHub Actions workflows](https://github.com/AdrienMttn/TgCloud/tree/master/.github/workflows): CI and release automation
+
+## Optional
+
+- [Issues](https://github.com/AdrienMttn/TgCloud/issues): Bug reports and feature requests
+- [Author website](https://adrienmttn.github.io): Adrien Mttn, creator of TgCloud
