@@ -24,6 +24,9 @@
   <a href="#api-reference">API</a>
 </p>
 
+> ⚠️ **This project is intended for personal and educational use only. 
+> It is not designed, tested, or supported for production environments.**
+
 ---
 
 ## 🚀 Demo
