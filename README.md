@@ -14,6 +14,7 @@
   <img src="https://img.shields.io/github/license/AdrienMttn/TgCloud?style=flat-square" alt="LICENSE">
   <img src="https://img.shields.io/github/downloads/AdrienMttn/TgCloud/total?style=flat-square" alt="downloads">
   <img src="https://img.shields.io/github/stars/AdrienMttn/TgCloud?style=flat-square" alt="stars">
+  <img src="https://img.shields.io/badge/STATUS-PERSONAL%20USE%20ONLY-red?style=flat-square" alt="Personal Use Only">
 </p>
 
 <p align="center">
